@@ -23,11 +23,13 @@ export OPEN_API_KEY = 'sk-...'
 
 
 TODO: 
-1. Fix React state refresh problems
-2. Unit tests
-3. Integration tests (maybe within a docker container)
-4. Github workflow pipelines
-5. Shell file setup, with potential Docker integration
+1. Styling
+2. Fix React state refresh problems
+3. Unit tests
+4. GPT toggle
+5. Github workflow pipelines
+6. Shell file setup, with potential Docker integration
+7. Integration tests (maybe within a docker container)
 
 DONE:
 
