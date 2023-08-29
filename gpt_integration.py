@@ -19,7 +19,8 @@ Notes:
 """
 
 retryPrompt = """
-Please format the response in JSON list with each object containing a 'question' and 'answer' as follows:
+Please format the response in JSON list with each object containing a 'question'
+and 'answer' as follows:
 [
     { 
         "question": "",
