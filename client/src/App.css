@@ -1,0 +1,8 @@
+.App {
+  text-align: center;
+}
+
+.answer-buttons {
+  display: 'flex';
+  justify-content: 'space-between';
+}
