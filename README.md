@@ -1,6 +1,9 @@
 # Anki with GPT integration
 
-> Enhance Anki with AI tools 
+> Enhance Anki with AI tools
+> 
+![Python backend workflow](https://github.com/ryanarnouk/AnkiGPTIntegration/actions/workflows/build-and-test-pipeline.yaml/badge.svg)
+![Frontend lint workflow](https://github.com/ryanarnouk/AnkiGPTIntegration/actions/workflows/frontend-linter-pipeline.yaml/badge.svg)
 
 
 Setup process (TODO): 
