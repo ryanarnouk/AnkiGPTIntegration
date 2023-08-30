@@ -57,11 +57,15 @@ def handle_message(message):
 def get_current_card():
     global loop
     while loop:
-        response = invoke('guiCurrentCard')
-        print(response)
+        try:
+            response = invoke('guiCurrentCard')
+            print(response)
 
-        emit('card', json.dumps(response), broadcast=True)
-        socketio.sleep(5)
+            emit('card', json.dumps(response), broadcast=True)
+            socketio.sleep(5)
+        except ValueError as e:
+            emit('card', 'error', broadcast=True)
+            socketio.sleep(5) # try again after 5 seconds
 
 @socketio.on('score_answer')
 def check_answer(request):

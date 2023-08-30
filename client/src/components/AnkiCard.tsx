@@ -43,16 +43,20 @@ const AnkiCard: React.FC = () => {
         });
 
         socket.on('card', (data) => {
-            var newCard = JSON.parse(data) as CardData;
-            setCurrentCard((prevCard) => {
-                if (prevCard == null || prevCard?.cardId !== newCard.cardId) {
-                    setAnswer('');
-                    setAnswerScore(originalAnswer);
-                    return newCard;
-                } 
-                return prevCard;
-            });
-
+            try {
+                var newCard = JSON.parse(data) as CardData;
+                setCurrentCard((prevCard) => {
+                    if (prevCard == null || prevCard?.cardId !== newCard.cardId) {
+                        setAnswer('');
+                        setAnswerScore(originalAnswer);
+                        return newCard;
+                    } 
+                    return prevCard;
+                });
+            } catch {
+                // Properly formatted card is not selected
+                setCurrentCard((prevCard) => null);
+            }
         })
 
         return () => {
