@@ -26,9 +26,10 @@ interface CardData {
 }
 
 const AnkiCard: React.FC = () => {
+    const originalAnswer = 'GPT response will load here once submit';
     const [currentCard, setCurrentCard] = useState<CardData | null>(null);
     const [answer, setAnswer] = useState('');
-    const [answerScore, setAnswerScore] = useState('GPT response will load here once submit');
+    const [answerScore, setAnswerScore] = useState(originalAnswer);
     const [socket, setSocket] = useState<Socket | null>(null);
 
     useEffect(() => {
@@ -42,7 +43,16 @@ const AnkiCard: React.FC = () => {
         });
 
         socket.on('card', (data) => {
-            setCurrentCard(JSON.parse(data) as CardData);
+            var newCard = JSON.parse(data) as CardData;
+            setCurrentCard((prevCard) => {
+                if (prevCard == null || prevCard?.cardId !== newCard.cardId) {
+                    setAnswer('');
+                    setAnswerScore(originalAnswer);
+                    return newCard;
+                } 
+                return prevCard;
+            });
+
         })
 
         return () => {
