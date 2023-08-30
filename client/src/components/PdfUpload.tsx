@@ -4,6 +4,7 @@ import axios from 'axios';
 const PdfUpload: React.FC = () => {
     const [file, setFile] = useState<File | null>(null);
     const [deckName, setInputValue] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = event.target.files?.[0];
@@ -26,10 +27,17 @@ const PdfUpload: React.FC = () => {
                 const formData = new FormData();
                 formData.append('pdfFile', file);
 
+                setIsLoading(true);
                 const response = await axios.post(apiUrl, formData);
                 console.log('API response', response.data);
+                alert("Question generation completed")
+                setFile(null);
+                setInputValue('');
             } catch (error) {
                 console.error('Request failed:', error);
+                alert("There was an error uploading the notes")
+            } finally {
+                setIsLoading(false);
             }
         }
     }
@@ -42,8 +50,8 @@ const PdfUpload: React.FC = () => {
             </div>
             <input type="file" accept=".pdf" onChange={handleFileChange} id='file-upload' />
             <input type="text" value={deckName} onChange={handleInputChange} placeholder='Deck name' className='deck-input'/>
-            <button onClick={handleUpload} disabled={!file} className='button submit'>
-                Upload PDF  
+            <button onClick={handleUpload} disabled={!file} className={`button submit ${isLoading ? 'loading' : ''}`}>
+                {isLoading ? "Uploading..." : "Upload PDF"}  
             </button>
         </div>
     )

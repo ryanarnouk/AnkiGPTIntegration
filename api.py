@@ -7,13 +7,18 @@ from flask_socketio import SocketIO, emit
 from anki_connect import invoke, create_cards
 from gpt_integration import get_question_answers, score_answer
 from pypdf import PdfReader
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+
 socketio = SocketIO(app, cors_allowed_origins='*')
 
 loop = True
 
 @app.route('/uploadNewNotes', methods=['POST'])
+@cross_origin()
 def add_new_notes():
     if 'pdfFile' not in request.files:
         return 'No file'
