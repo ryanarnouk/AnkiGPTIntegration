@@ -1,6 +1,6 @@
 import React from 'react';
 import PdfUpload from './components/PdfUpload';
-import './App.css';
+import './styles/App.css';
 import AnkiCard from './components/AnkiCard';
 
 function App() {

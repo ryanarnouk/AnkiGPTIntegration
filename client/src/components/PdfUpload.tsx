@@ -35,10 +35,14 @@ const PdfUpload: React.FC = () => {
     }
 
     return (
-        <div>
-            <input type="file" accept=".pdf" onChange={handleFileChange} />
-            <input type="text" value={deckName} onChange={handleInputChange} placeholder='Deck name' />
-            <button onClick={handleUpload} disabled={!file}>
+        <div className="side-view main">
+            <div className="side-view">
+                <label htmlFor="file-upload" className="upload button">Select File</label>
+                <p className="file-name">{file?.name}</p>
+            </div>
+            <input type="file" accept=".pdf" onChange={handleFileChange} id='file-upload' />
+            <input type="text" value={deckName} onChange={handleInputChange} placeholder='Deck name' className='deck-input'/>
+            <button onClick={handleUpload} disabled={!file} className='button submit'>
                 Upload PDF  
             </button>
         </div>

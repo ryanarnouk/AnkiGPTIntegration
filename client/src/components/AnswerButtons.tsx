@@ -12,10 +12,10 @@ const AnswerButtons: React.FC<AnswerButtonProps> = ({ time, answerClick }) => {
 
     return (
         <div className="answer-buttons">
-            <button onClick={() => handleClick(0)}>Again {time[0]}</button>
-            <button onClick={() => handleClick(1)}>Hard {time[1]}</button>
-            <button onClick={() => handleClick(2)}>Good {time[2]}</button>
-            <button onClick={() => handleClick(3)}>Easy {time[3]}</button>
+            <button className="button answer" onClick={() => handleClick(0)}>Again {time[0]}</button>
+            <button className="button answer" onClick={() => handleClick(1)}>Hard {time[1]}</button>
+            <button className="button answer" onClick={() => handleClick(2)}>Good {time[2]}</button>
+            <button className="button answer" onClick={() => handleClick(3)}>Easy {time[3]}</button>
         </div>
     )
 }

@@ -28,7 +28,7 @@ interface CardData {
 const AnkiCard: React.FC = () => {
     const [currentCard, setCurrentCard] = useState<CardData | null>(null);
     const [answer, setAnswer] = useState('');
-    const [answerScore, setAnswerScore] = useState('');
+    const [answerScore, setAnswerScore] = useState('GPT response will load here once submit');
     const [socket, setSocket] = useState<Socket | null>(null);
 
     useEffect(() => {
@@ -50,7 +50,7 @@ const AnkiCard: React.FC = () => {
         }
     }, []);
 
-    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setAnswer(event.target.value);
     }
 
@@ -94,11 +94,13 @@ const AnkiCard: React.FC = () => {
         <div>
             <h1>Anki Integration</h1>
             <p>{currentCard != null ? currentCard.fields.Front.value : "GUI does not have a currently selected card. Or, the web socket connection cannot be reached"}</p>
-            <input type='text' value={answer} onChange={handleInputChange} placeholder='Your answer'/>
-            <button onClick={handleSubmit}>
+            <textarea value={answer} onChange={handleInputChange} placeholder='Your answer' className='answer-input' rows={4}/>
+            <br />
+            <button onClick={handleSubmit} className="button submit">
                 Submit Answer
             </button>
-            <p>{answerScore}</p>
+            <p className="ai-answer">{answerScore}</p>
+            <h3>Answer card:</h3>
             {currentCard != null ? <AnswerButtons time={currentCard.nextReviews} answerClick={handleAnswerSubmit} /> : undefined}
         </div>
     )
