@@ -1,4 +1,5 @@
 import json
+import urllib.error
 
 from flask import Flask
 from flask import request
@@ -63,8 +64,13 @@ def get_current_card():
 
             emit('card', json.dumps(response), broadcast=True)
             socketio.sleep(5)
-        except ValueError as e:
-            emit('card', 'error', broadcast=True)
+        except urllib.error.URLError:
+            # emit an error that the Anki could not be found with the connection port
+            emit('card', 'Anki is not running with an open connection', broadcast=True)
+            socketio.sleep(5)  # try again after 5 seconds
+        except ValueError:
+            # emit an error that the card cannot be found
+            emit('card', 'Could not find a card running in the GUI', broadcast=True)
             socketio.sleep(5) # try again after 5 seconds
 
 @socketio.on('score_answer')
