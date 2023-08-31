@@ -46,6 +46,8 @@ def add_new_notes():
 # Socket.io connection logic
 @socketio.on('connect')
 def handle_connect():
+    global loop
+    loop = True
     print('connected')
 
 @socketio.on('disconnect')
