@@ -19,3 +19,6 @@ jobs:
         run: yarn
       - name: Run ESLint
         run: yarn eslint . --ext .js,.jsx,.ts,.tsx
+      - name: Fail pipeline if there are ESLint issues
+        if: ${{ steps.run-eslint.outcome != 'success' }}
+        run: exit 1
