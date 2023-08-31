@@ -14,7 +14,7 @@ const GptDropdown = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.post(`http://127.0.0.1:105/setModel?model=${selectedElement}`);
+                await axios.post(`http://127.0.0.1:105/setModel?model=${selectedElement}`);
             } catch (error) {
                 alert("Unable to update model");
             }
