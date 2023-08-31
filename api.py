@@ -1,6 +1,7 @@
 import json
 import urllib.error
 
+import openai
 from flask import Flask
 from flask import request
 from flask_socketio import SocketIO, emit
@@ -95,9 +96,11 @@ def check_answer(request):
     user_answer = request['userAnswer']
     ai_answer = request['aiAnswer']
 
-    res = score_answer(question, user_answer, ai_answer)
-
-    emit('score', res)
+    try:
+        res = score_answer(question, user_answer, ai_answer)
+        emit('score', res)
+    except openai.error.InvalidRequestError as e:
+        emit('score', e.user_message)
 
 @socketio.on('submit_card')
 def set_current_card(data):
