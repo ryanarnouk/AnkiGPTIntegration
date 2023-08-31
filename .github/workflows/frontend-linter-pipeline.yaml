@@ -16,9 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install modules
-        run: yarn
+        run: npm install
       - name: Run ESLint
-        run: yarn eslint . --ext .js,.jsx,.ts,.tsx
-      - name: Fail pipeline if there are ESLint issues
-        if: ${{ steps.run-eslint.outcome != 'success' }}
-        run: exit 1
+        run: npx eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0
