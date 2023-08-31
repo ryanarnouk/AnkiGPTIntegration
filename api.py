@@ -4,6 +4,8 @@ import urllib.error
 from flask import Flask
 from flask import request
 from flask_socketio import SocketIO, emit
+
+import gpt_integration
 from anki_connect import invoke, create_cards
 from gpt_integration import get_question_answers, score_answer
 from pypdf import PdfReader
@@ -42,6 +44,13 @@ def add_new_notes():
     else:
         return 'Uploaded file is not a PDF'
 
+@app.route('/setModel', methods=['POST'])
+@cross_origin()
+def set_model():
+    model_query_param = request.args.get('model')
+    gpt_integration.model = model_query_param
+    print(gpt_integration.model)
+    return 'Model set for file upload and grader'
 
 # Socket.io connection logic
 @socketio.on('connect')

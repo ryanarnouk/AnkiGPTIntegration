@@ -9,6 +9,7 @@ openai.api_key = os.environ.get('OPEN_API_KEY')
 if openai.api_key is None:
     raise SystemError('Could not find OPEN_API_KEY environment variable')
 
+model = 'gpt-3.5-turbo' # default
 
 prompt = """
 Create question and answer pairs based on the notes provided. 
@@ -31,14 +32,12 @@ and 'answer' as follows:
 Create the question and answer pairs based on the following notes:
 """
 
-def run_model(gpt4, role, content):
-    model = 'gpt-4' if gpt4 else 'gpt-3.5-turbo'
+def run_model(role, content):
     return openai.ChatCompletion.create(model=model,
                                         messages=[{"role": role, "content": content}])
 
 def get_question_answers(text):
-    # Pass in true to use GPT 4
-    chat_response = run_model(False, "user", prompt + text)
+    chat_response = run_model("user", prompt + text)
     response_string = chat_response.choices[0].message.content
     response_json = parse_json(response_string)
 
@@ -49,7 +48,7 @@ def get_question_answers(text):
         run_retry(text)
 
 def run_retry(text):
-    retry_response = run_model(False, "user", retryPrompt + text)
+    retry_response = run_model("user", retryPrompt + text)
     response_string = retry_response.choices[0].message.content
     response_json = parse_json(response_string)
 
@@ -75,8 +74,10 @@ def score_answer(question, user_answer, ai_answer):
     Can you give the answer a score out of 5 with the reasoning? 
     """
 
+    # can change this back to hardcode 'gpt-3.5-turbo' if there is no need for the
+    # user to control the model used for the grader
     response = openai.ChatCompletion.create(
-        model='gpt-3.5-turbo',
+        model=model,
         messages=[
             {"role": 'system', "content": role},
             {"role": 'user', "content": formatted_input}

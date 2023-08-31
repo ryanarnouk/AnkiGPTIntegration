@@ -73,6 +73,9 @@ input[type="file"] {
   box-shadow: 9px 9px 18px #c2cfe3,
       -9px -9px 18px #e4f3ff;
   font-family: inherit;
+  border: none;
+  overflow: auto;
+  outline: none;
 }
 
 .upload {
@@ -116,7 +119,19 @@ input[type="file"] {
   outline: none;
 }
 
-.deck-input:focus, .answer-input:focus {
+.select-input {
+  border-radius: 4em;
+  padding: 0.2em;
+  box-sizing: border-box;
+  background: #D3E1F7;
+  box-shadow: inset 9px 9px 18px #c2cfe3,
+      inset -9px -9px 18px #e4f3ff;
+  border: 0;
+  font-size: 1em;
+  outline: none;
+}
+
+.deck-input:focus, .answer-input:focus, .select-input:focus {
   outline: none;
   box-shadow: inset 0 0 0 2px rgb(90, 90, 90),
       inset 9px 9px 18px #c2cfe3,

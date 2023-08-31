@@ -107,7 +107,7 @@ By running the server and the frontend in tandem (with Anki open), you should be
 - [x] Styling
 - [x] Web socket set up
 - [ ] Additional unit tests
-- [ ] GPT toggle (change from GPT-3.5-Turbo to GPT-4 depending on what you are willing to spend)
+- [x] GPT toggle (change from GPT-3.5-Turbo to GPT-4 depending on what you are willing to spend)
 - [x] GitHub workflow pipelines
 - [x] Shell file setup, with potential Docker integration
 - [ ] Integration tests (maybe within a docker container)

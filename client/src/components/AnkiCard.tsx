@@ -117,7 +117,6 @@ const AnkiCard: React.FC = () => {
                 Submit Answer
             </button>
             <p className="ai-answer">{answerScore}</p>
-            <h3>Answer card:</h3>
             {currentCard != null ? <AnswerButtons time={currentCard.nextReviews} answerClick={handleAnswerSubmit} /> : undefined}
         </div>
     )
