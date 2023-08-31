@@ -54,7 +54,9 @@ const AnkiCard: React.FC = () => {
                     return prevCard;
                 });
             } catch {
-                // Properly formatted card is not selected
+                // Properly formatted card is not selected. Remove information related to previous card
+                setAnswer('');
+                setAnswerScore(originalAnswer);
                 setCurrentCard(null);
             }
         })
@@ -96,11 +98,12 @@ const AnkiCard: React.FC = () => {
         if (socket) {
             socket.emit('submit_card', ease);
 
-            socket.on('submit', (response) => {
+            socket.once('submit', (response) => {
                 if (!response) {
                     alert("Could not submit card. Answer needs to be open on Anki for this method to work");
+                    return;
                 }
-            })
+            });
         }
     }
 
