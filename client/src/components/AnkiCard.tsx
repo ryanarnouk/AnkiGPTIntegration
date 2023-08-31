@@ -44,7 +44,7 @@ const AnkiCard: React.FC = () => {
 
         socket.on('card', (data) => {
             try {
-                let newCard = JSON.parse(data) as CardData;
+                const newCard = JSON.parse(data) as CardData;
                 setCurrentCard((prevCard) => {
                     if (prevCard == null || prevCard?.cardId !== newCard.cardId) {
                         setAnswer('');
