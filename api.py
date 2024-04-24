@@ -49,7 +49,12 @@ def add_new_notes():
 @cross_origin()
 def set_model():
     model_query_param = request.args.get('model')
+    true_false_query_param = request.args.get('tf')
     gpt_integration.model = model_query_param
+    if (true_false_query_param == "True"):
+        gpt_integration.truefalsegeneration = True
+    else:
+        gpt_integration.truefalsegeneration = False
     print(gpt_integration.model)
     return 'Model set for file upload and grader'
 

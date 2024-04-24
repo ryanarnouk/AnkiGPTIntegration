@@ -10,35 +10,64 @@ if openai.api_key is None:
     raise SystemError('Could not find OPEN_API_KEY environment variable')
 
 model = 'gpt-3.5-turbo' # default
+truefalsegeneration = True
 
-prompt = """
-Create question and answer pairs based on the notes provided. 
-Please format in JSON list with each object containing a 'question' and 'answer'
+def get_prompt(notes):
+    if truefalsegeneration:
+        return """
+        Please come up with a confusing mix of true and false difficult questions pairs based on the notes provided.
+        Notes: 
+        """ + notes + """
+        
+        Please only provide a RFC8259 compliant JSON response following this format without deviation.
+        [
+            { 
+                "question": "",
+                "answer": "",
+            },
+        ]
+        The JSON response:
 
-Notes:
+        """
+    else:
+        return """
+        Create questions with their question and answer pairs based on the notes provided. Please create confusing questions that are useful for studying.
 
-"""
+        Notes:""" + notes + """
 
-retryPrompt = """
-Please format the response in JSON list with each object containing a 'question'
-and 'answer' as follows:
-[
-    { 
-        "question": "",
-        "answer": "",
-    },
-]
+        Please only provide a RFC8259 compliant JSON response following this format without deviation.
+        [
+            { 
+                "question": "",
+                "answer": "",
+            },
+        ]
+        The JSON response:
 
-Create the question and answer pairs based on the following notes:
-"""
+        """
+
+def get_retry_prompt():
+    return """
+    Please format the response in JSON list with each object containing a 'question'
+    and 'answer' as follows:
+    [
+        { 
+            "question": "",
+            "answer": "",
+        },
+    ]
+
+    Create the question and answer pairs based on the following notes:
+    """
 
 def run_model(role, content):
     return openai.ChatCompletion.create(model=model,
                                         messages=[{"role": role, "content": content}])
 
 def get_question_answers(text):
-    chat_response = run_model("user", prompt + text)
+    chat_response = run_model("user", get_prompt(text))
     response_string = chat_response.choices[0].message.content
+    print(response_string)
     response_json = parse_json(response_string)
 
     try:
@@ -48,7 +77,7 @@ def get_question_answers(text):
         run_retry(text)
 
 def run_retry(text):
-    retry_response = run_model("user", retryPrompt + text)
+    retry_response = run_model("user", get_retry_prompt() + text)
     response_string = retry_response.choices[0].message.content
     response_json = parse_json(response_string)
 
