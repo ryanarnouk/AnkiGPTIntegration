@@ -11,6 +11,7 @@ from anki_connect import invoke, create_cards
 from gpt_integration import get_question_answers, score_answer
 from pypdf import PdfReader
 from flask_cors import CORS, cross_origin
+from engineio.async_drivers import gevent
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -75,24 +76,34 @@ def handle_disconnect():
 def handle_message(message):
     print(f'Received message: {message}')
     emit('message', message)
+    
+cache = {}
 
 @socketio.on('get_current_card')
 def get_current_card():
     global loop
+    previous_card = None
+
     while loop:
         try:
             response = invoke('guiCurrentCard')
             print(response)
 
-            emit('card', json.dumps(response), broadcast=True)
-            socketio.sleep(5)
+            # detect card change
+            if previous_card != response:
+                emit('card', json.dumps(response), broadcast=True)
+                socketio.sleep(0.1)
+
+            previous_card = response
         except urllib.error.URLError:
             # emit an error that the Anki could not be found with the connection port
             emit('card', 'Anki is not running with an open connection', broadcast=True)
+            previous_card = None
             socketio.sleep(5)  # try again after 5 seconds
         except ValueError:
             # emit an error that the card cannot be found
             emit('card', 'Could not find a card running in the GUI', broadcast=True)
+            previous_card = None
             socketio.sleep(5) # try again after 5 seconds
 
 @socketio.on('score_answer')
