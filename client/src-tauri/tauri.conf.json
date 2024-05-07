@@ -60,7 +60,7 @@
       "shell": {
         "sidecar": true,
         "scope": [
-          { "name": "/Users/ryanarnouk/2023-Projects/testing-python-anki-integration/dist/api", "sidecar": true }
+          { "name": "/../../dist/api", "sidecar": true }
         ]
       }
     },
@@ -72,7 +72,7 @@
         "depends": []
       },
       "externalBin": [
-        "/Users/ryanarnouk/2023-Projects/testing-python-anki-integration/dist/api"
+        "../../dist/api"
       ],
       "icon": [
         "icons/32x32.png",
