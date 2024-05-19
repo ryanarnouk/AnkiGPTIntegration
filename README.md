@@ -17,6 +17,9 @@ I originally wanted to work on an application to generate question and answers f
 
 And, thanks to the [AnkiConnect](https://github.com/FooSoft/anki-connect) add-on, rather than needing to create a spaced repetition/active recall algorithm on my own, the project can utilize Anki's proven power. 
 
+### Version 2
+Note that I have created a new version of this project (which I label as 'version 2') which contains a rewrite of the backend in Rust and a Desktop application rather than a web application. Most of my active development time on this project will now be spent working on the rewritten project linked [here](https://github.com/ryanarnouk/anki-gpt-desktop). 
+
 ## Setup
 ### With Docker
 > The setup process is a lot smoother when using Docker and the shell scripts provided. The backend server works outside of Docker as well (see 'Without Docker' section below)
